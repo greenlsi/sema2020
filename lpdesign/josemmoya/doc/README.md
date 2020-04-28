@@ -6,6 +6,6 @@
 - Decisiones de implementación
 - Justificación de la validez de la verificación o nueva verificación
 - Justificar el cumplimiento de plazos en el caso peor
-- Optimización
+- Optimización de consumo. Justificar decisiones de diseño
 - Justificación de la validez de la verificación o nueva verificación
 - Justificar el cumplimiento de plazos en el caso peor
