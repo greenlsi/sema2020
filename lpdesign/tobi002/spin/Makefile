@@ -1,7 +1,6 @@
 all: pan
-	#./pan -a -f -N ultrasonic_spec
-	./pan -a -f
-#./pan -a -f -N req2
+	./pan -a -f -N ultrasonic_spec
+	./pan -a -f -N IMU_spec
 
 pan: pan.c
 	gcc -o pan pan.c
