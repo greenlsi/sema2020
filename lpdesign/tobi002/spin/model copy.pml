@@ -105,7 +105,6 @@ bit data = 0;
 bit validData = 0;
 bit no_data = 0;
 byte semId = 0;   // Indica si hay algún semáforo elegido o no hay ninguno
-byte semToSelect = 0;
 bit changePos = 0;
 
 int semaphore_state;
@@ -128,8 +127,6 @@ active proctype semaphore_fsm() {
         // :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 7...\n"); validData = 0; data = 0; semId = 7; semaphore_state = SEL_SEM;
         // :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 8...\n"); validData = 0; data = 0; semId = 8; semaphore_state = SEL_SEM;
         // :: (data && !validData) -> printf("Change to SEL_SEM... Selecting semaphore None...\n"); data = 0; semId = 0; semaphore_state = SEL_SEM;
-        :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 1...\n"); validData = 0; data = 0; semId = semToSelect; semaphore_state = SEL_SEM;
-        :: (data && !validData) -> printf("Change to SEL_SEM... Selecting semaphore None...\n"); data = 0; semId = 0; semaphore_state = SEL_SEM;
         fi
     }
     :: (semaphore_state == SEL_SEM) -> atomic{ 
@@ -144,9 +141,6 @@ active proctype semaphore_fsm() {
         // :: (data && changePos && validData) -> printf("Change to SEL_SEM... Selecting semaphore 8...\n"); validData = 0; changePos = 0; semId = 8; semaphore_state = SEL_SEM;
         // :: (data && changePos && !validData) -> printf("Change to SEL_SEM... Selecting semaphore None...\n"); changePos = 0; semId = 0; semaphore_state = SEL_SEM;
         // :: !data -> printf("Change to IDLE_SEM... No data available...\n"); no_data = 0; semId = 0; semaphore_state = IDLE_SEM;
-        :: (data && changePos && validData) -> printf("Change to SEL_SEM... Selecting semaphore 1...\n"); validData = 0; changePos = 0; semId = semToSelect; semaphore_state = SEL_SEM;
-        :: (data && changePos && !validData) -> printf("Change to SEL_SEM... Selecting semaphore None...\n"); changePos = 0; semId = 0; semaphore_state = SEL_SEM;
-        :: !data -> printf("Change to IDLE_SEM... No data available...\n"); no_data = 0; semId = 0; semaphore_state = IDLE_SEM;
         fi
     }
     od
@@ -175,14 +169,7 @@ active proctype entorno () {
         // :: data -> validData = 1;     
         // :: changePos = 1;
         :: data = 1;  
-        :: data -> validData = 1;  semToSelect = 1;
-        :: data -> validData = 1;  semToSelect = 2;
-        :: data -> validData = 1;  semToSelect = 3;
-        :: data -> validData = 1;  semToSelect = 4;
-        :: data -> validData = 1;  semToSelect = 5;
-        :: data -> validData = 1;  semToSelect = 6;
-        :: data -> validData = 1;  semToSelect = 7;
-        :: data -> validData = 1;  semToSelect = 8;
+        :: data -> validData = 1;     
         :: changePos = 1;
 
         :: skip

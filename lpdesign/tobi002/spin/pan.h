@@ -4,7 +4,7 @@
 #define SpinVersion	"Spin Version 6.5.1 -- 20 December 2019"
 #define PanSource	"model.pml"
 
-#define G_long	8
+#define G_long	4
 #define G_int	4
 
 #define ulong	unsigned long
@@ -121,15 +121,15 @@
 #endif
 #ifdef NP
 	#define HAS_NP	2
-	#define VERI	3	/* np_ */
+	#define VERI	7	/* np_ */
 #endif
 #if defined(NOCLAIM) && defined(NP)
 	#undef NOCLAIM
 #endif
 #ifndef NOCLAIM
-	#define NCLAIMS	1
+	#define NCLAIMS	3
 	#ifndef NP
-		#define VERI	2
+		#define VERI	6
 	#endif
 #endif
 
@@ -139,32 +139,60 @@ typedef struct S_F_MAP {
 	int upto;
 } S_F_MAP;
 
-#define _nstates2	14	/* ultrasonic_spec */
-#define minseq2	57
-#define maxseq2	69
-#define _endstate2	13
+#define _nstates6	14	/* semaphore_spec */
+#define minseq6	187
+#define maxseq6	199
+#define _endstate6	13
 
-#define _nstates1	20	/* entorno */
-#define minseq1	38
-#define maxseq1	56
-#define _endstate1	19
+#define _nstates5	21	/* IMU_spec */
+#define minseq5	167
+#define maxseq5	186
+#define _endstate5	20
 
-#define _nstates0	39	/* ultrasonic_fsm */
+#define _nstates4	14	/* ultrasonic_spec */
+#define minseq4	154
+#define maxseq4	166
+#define _endstate4	13
+
+#define _nstates3	52	/* entorno */
+#define minseq3	103
+#define maxseq3	153
+#define _endstate3	51
+
+#define _nstates2	41	/* semaphore_fsm */
+#define minseq2	63
+#define maxseq2	102
+#define _endstate2	40
+
+#define _nstates1	32	/* IMU_fsm */
+#define minseq1	32
+#define maxseq1	62
+#define _endstate1	31
+
+#define _nstates0	33	/* ultrasonic_fsm */
 #define minseq0	0
-#define maxseq0	37
-#define _endstate0	38
+#define maxseq0	31
+#define _endstate0	32
 
+extern short src_ln6[];
+extern short src_ln5[];
+extern short src_ln4[];
+extern short src_ln3[];
 extern short src_ln2[];
 extern short src_ln1[];
 extern short src_ln0[];
+extern S_F_MAP src_file6[];
+extern S_F_MAP src_file5[];
+extern S_F_MAP src_file4[];
+extern S_F_MAP src_file3[];
 extern S_F_MAP src_file2[];
 extern S_F_MAP src_file1[];
 extern S_F_MAP src_file0[];
 
 #define T_ID	unsigned char
-#define _T5	27
-#define _T2	28
-#define WS		8 /* word size in bytes */
+#define _T5	62
+#define _T2	63
+#define WS		4 /* word size in bytes */
 #define SYNC	0
 #define ASYNC	0
 
@@ -178,9 +206,51 @@ extern S_F_MAP src_file0[];
 	#endif
 #endif
 
-typedef struct P2 { /* ultrasonic_spec */
+typedef struct P6 { /* semaphore_spec */
 	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 3; /* proctype */
+	unsigned _t   : 4; /* proctype */
+	unsigned _p   : 7; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P6;
+#define Air6	(sizeof(P6) - 3)
+
+typedef struct P5 { /* IMU_spec */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 4; /* proctype */
+	unsigned _p   : 7; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P5;
+#define Air5	(sizeof(P5) - 3)
+
+typedef struct P4 { /* ultrasonic_spec */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 4; /* proctype */
+	unsigned _p   : 7; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P4;
+#define Air4	(sizeof(P4) - 3)
+
+#define Pentorno	((P3 *)_this)
+typedef struct P3 { /* entorno */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 4; /* proctype */
+	unsigned _p   : 7; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P3;
+#define Air3	(sizeof(P3) - 3)
+
+#define Psemaphore_fsm	((P2 *)_this)
+typedef struct P2 { /* semaphore_fsm */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 4; /* proctype */
 	unsigned _p   : 7; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
@@ -188,10 +258,10 @@ typedef struct P2 { /* ultrasonic_spec */
 } P2;
 #define Air2	(sizeof(P2) - 3)
 
-#define Pentorno	((P1 *)_this)
-typedef struct P1 { /* entorno */
+#define PIMU_fsm	((P1 *)_this)
+typedef struct P1 { /* IMU_fsm */
 	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 3; /* proctype */
+	unsigned _t   : 4; /* proctype */
 	unsigned _p   : 7; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
@@ -202,7 +272,7 @@ typedef struct P1 { /* entorno */
 #define Pultrasonic_fsm	((P0 *)_this)
 typedef struct P0 { /* ultrasonic_fsm */
 	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 3; /* proctype */
+	unsigned _t   : 4; /* proctype */
 	unsigned _p   : 7; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
@@ -210,19 +280,33 @@ typedef struct P0 { /* ultrasonic_fsm */
 } P0;
 #define Air0	(sizeof(P0) - 3)
 
-typedef struct P3 { /* np_ */
+typedef struct P7 { /* np_ */
 	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 3; /* proctype */
+	unsigned _t   : 4; /* proctype */
 	unsigned _p   : 7; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
 #endif
-} P3;
-#define Air3	(sizeof(P3) - 3)
+} P7;
+#define Air7	(sizeof(P7) - 3)
 
-#define Pclaim	P0
-#ifndef NCLAIMS
-	#define NCLAIMS 1
+
+#ifndef NOCLAIM
+ #ifndef NP
+	#undef VERI
+	#define VERI	8
+ #endif
+	#define Pclaim	P8
+
+typedef struct P8 {
+	unsigned _pid : 8; /* always zero */
+	unsigned _t   : 4; /* active-claim type  */
+	unsigned _p   : 7; /* active-claim state */
+	unsigned _n   : 3; /* active-claim index */
+	uchar c_cur[NCLAIMS]; /* claim-states */
+} P8;
+	#define Air8	(0)
+
 #endif
 #if defined(BFS) && defined(REACH)
 	#undef REACH
@@ -416,7 +500,17 @@ typedef struct State {
 	unsigned timer_sample_end : 1;
 	unsigned timer_trigger_start : 1;
 	unsigned timer_trigger_end : 1;
+	unsigned timer_IMU_start : 1;
+	unsigned timer_IMU_end : 1;
+	unsigned data : 1;
+	unsigned validData : 1;
+	unsigned changePos : 1;
+	uchar semId;
+	uchar semToSelect;
 	int ultrasonic_state;
+	int IMU_state;
+	int counter;
+	int semaphore_state;
 #ifdef TRIX
 	/* room for 512 proc+chan ptrs, + safety margin */
 	char *_ids_[MAXPROC+MAXQ+4];
@@ -438,21 +532,27 @@ typedef struct TRIX_v6 {
 #endif
 
 #define HAS_TRACK	0
+/* hidden variable: */	uchar average_ready_IMU;
+/* hidden variable: */	uchar no_data;
 #define FORWARD_MOVES	"pan.m"
 #define BACKWARD_MOVES	"pan.b"
 #define TRANSITIONS	"pan.t"
-#define _NP_	3
-#define _nstates3	3 /* np_ */
-#define _endstate3	2 /* np_ */
+#define _NP_	7
+#define _nstates7	3 /* np_ */
+#define _endstate7	2 /* np_ */
 
-#define _start3	0 /* np_ */
-#define _start2	5
-#define _start1	16
+#define _start7	0 /* np_ */
+#define _start6	5
+#define _start5	7
+#define _start4	5
+#define _start3	48
+#define _start2	1
+#define _start1	1
 #define _start0	1
 #ifdef NP
 	#define ACCEPT_LAB	1 /* at least 1 in np_ */
 #else
-	#define ACCEPT_LAB	1 /* user-defined accept labels */
+	#define ACCEPT_LAB	4 /* user-defined accept labels */
 #endif
 #ifdef MEMCNT
 	#ifdef MEMLIM
@@ -808,7 +908,7 @@ void qsend(int, int, int);
 #define GLOBAL	7
 #define BAD	8
 #define ALPHA_F	9
-#define NTRANS	29
+#define NTRANS	64
 #if defined(BFS_PAR) || NCORE>1
 	void e_critical(int);
 	void x_critical(int);
