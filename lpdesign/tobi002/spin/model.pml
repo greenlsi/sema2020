@@ -103,9 +103,8 @@ active proctype IMU_fsm() {
 /* --------------- SEMAPHORE SELECTION FSM VARIABLES ---------------------*/
 bit data = 0;
 bit validData = 0;
-bit no_data = 0;
-byte semId = 0;   // Indica si hay algún semáforo elegido o no hay ninguno
-byte semToSelect = 0;
+bit semId = 0;   // 0 = None, 1 = sem_id_x
+//byte semToSelect = 0;
 bit changePos = 0;
 
 int semaphore_state;
@@ -119,40 +118,52 @@ active proctype semaphore_fsm() {
     do
     :: (semaphore_state == IDLE_SEM) -> atomic {
         if
-        // :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 1...\n"); validData = 0; data = 0; semId = 1; semaphore_state = SEL_SEM;
-        // :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 2...\n"); validData = 0; data = 0; semId = 2; semaphore_state = SEL_SEM;
-        // :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 3...\n"); validData = 0; data = 0; semId = 3; semaphore_state = SEL_SEM;
-        // :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 4...\n"); validData = 0; data = 0; semId = 4; semaphore_state = SEL_SEM;
-        // :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 5...\n"); validData = 0; data = 0; semId = 5; semaphore_state = SEL_SEM;
-        // :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 6...\n"); validData = 0; data = 0; semId = 6; semaphore_state = SEL_SEM;
-        // :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 7...\n"); validData = 0; data = 0; semId = 7; semaphore_state = SEL_SEM;
-        // :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 8...\n"); validData = 0; data = 0; semId = 8; semaphore_state = SEL_SEM;
-        // :: (data && !validData) -> printf("Change to SEL_SEM... Selecting semaphore None...\n"); data = 0; semId = 0; semaphore_state = SEL_SEM;
-        :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 1...\n"); validData = 0; data = 0; semId = semToSelect; semaphore_state = SEL_SEM;
+        :: (data && validData) -> printf("Change to SEL_SEM... Selecting semaphore 1...\n"); validData = 0; data = 0; semId = 1; semaphore_state = SEL_SEM;
         :: (data && !validData) -> printf("Change to SEL_SEM... Selecting semaphore None...\n"); data = 0; semId = 0; semaphore_state = SEL_SEM;
         fi
     }
     :: (semaphore_state == SEL_SEM) -> atomic{ 
         if
-        // :: (data && changePos && validData) -> printf("Change to SEL_SEM... Selecting semaphore 1...\n"); validData = 0; changePos = 0; semId = 1; semaphore_state = SEL_SEM;
-        // :: (data && changePos && validData) -> printf("Change to SEL_SEM... Selecting semaphore 2...\n"); validData = 0; changePos = 0; semId = 2; semaphore_state = SEL_SEM;
-        // :: (data && changePos && validData) -> printf("Change to SEL_SEM... Selecting semaphore 3...\n"); validData = 0; changePos = 0; semId = 3; semaphore_state = SEL_SEM;
-        // :: (data && changePos && validData) -> printf("Change to SEL_SEM... Selecting semaphore 4...\n"); validData = 0; changePos = 0; semId = 4; semaphore_state = SEL_SEM;
-        // :: (data && changePos && validData) -> printf("Change to SEL_SEM... Selecting semaphore 5...\n"); validData = 0; changePos = 0; semId = 5; semaphore_state = SEL_SEM;
-        // :: (data && changePos && validData) -> printf("Change to SEL_SEM... Selecting semaphore 6...\n"); validData = 0; changePos = 0; semId = 6; semaphore_state = SEL_SEM;
-        // :: (data && changePos && validData) -> printf("Change to SEL_SEM... Selecting semaphore 7...\n"); validData = 0; changePos = 0; semId = 7; semaphore_state = SEL_SEM;
-        // :: (data && changePos && validData) -> printf("Change to SEL_SEM... Selecting semaphore 8...\n"); validData = 0; changePos = 0; semId = 8; semaphore_state = SEL_SEM;
-        // :: (data && changePos && !validData) -> printf("Change to SEL_SEM... Selecting semaphore None...\n"); changePos = 0; semId = 0; semaphore_state = SEL_SEM;
-        // :: !data -> printf("Change to IDLE_SEM... No data available...\n"); no_data = 0; semId = 0; semaphore_state = IDLE_SEM;
-        :: (data && changePos && validData) -> printf("Change to SEL_SEM... Selecting semaphore 1...\n"); validData = 0; changePos = 0; semId = semToSelect; semaphore_state = SEL_SEM;
+        :: (data && changePos && validData) -> printf("Change to SEL_SEM... Selecting semaphore 1...\n"); validData = 0; changePos = 0; semId = 1; semaphore_state = SEL_SEM;
         :: (data && changePos && !validData) -> printf("Change to SEL_SEM... Selecting semaphore None...\n"); changePos = 0; semId = 0; semaphore_state = SEL_SEM;
-        :: !data -> printf("Change to IDLE_SEM... No data available...\n"); no_data = 0; semId = 0; semaphore_state = IDLE_SEM;
+        :: !data -> printf("Change to IDLE_SEM... No data available...\n"); semId = 0; semaphore_state = IDLE_SEM;
         fi
     }
     od
 
 }
 
+
+/* --------------- TYPE ZONE SELECTION FSM VARIABLES ---------------------*/
+
+# define ACERA 0
+# define PASO 1
+# define CARRETERA 2
+# define IDLE 0
+
+byte typeZone = ACERA;   // 0 = Acera, 1 = sem_id_x
+//byte semToSelect = 0;
+bit changePos_typeZone = 0;
+
+int typeZone_state;
+
+/* --------------- SEMAPHORE SELECTION FSM ---------------------*/
+
+active proctype typeZone_fsm() {
+    
+    typeZone_state = IDLE;
+
+    do
+    :: (typeZone_state == IDLE) -> atomic {
+        if
+        :: (changePos_typeZone) -> printf("Selecting ACERA...\n"); changePos_typeZone = 0; typeZone = ACERA;
+        :: (changePos_typeZone) -> printf("Selecting PASO...\n"); changePos_typeZone = 0; typeZone = PASO;
+        :: (changePos_typeZone) -> printf("Selecting CARRETERA...\n"); changePos_typeZone = 0; typeZone = CARRETERA;
+        fi
+    }
+    od
+
+}
 
 /* --------------- ENTORNO ---------------------*/
 
@@ -171,20 +182,9 @@ active proctype entorno () {
         :: timer_IMU_start -> timer_IMU_start = 0; timer_IMU_end = 1 
 
         // SEMAPHORE
-        // :: data = 1;  
-        // :: data -> validData = 1;     
-        // :: changePos = 1;
         :: data = 1;  
-        :: data -> validData = 1;  semToSelect = 1;
-        :: data -> validData = 1;  semToSelect = 2;
-        :: data -> validData = 1;  semToSelect = 3;
-        :: data -> validData = 1;  semToSelect = 4;
-        :: data -> validData = 1;  semToSelect = 5;
-        :: data -> validData = 1;  semToSelect = 6;
-        :: data -> validData = 1;  semToSelect = 7;
-        :: data -> validData = 1;  semToSelect = 8;
-        :: changePos = 1;
-
+        :: data -> validData = 1;
+        :: changePos = 1; changePos_typeZone = 1;
         :: skip
         fi
         printf("data: %d   validData: %d   changePos: %d   state: %d\n", data, validData, changePos, semaphore_state)
