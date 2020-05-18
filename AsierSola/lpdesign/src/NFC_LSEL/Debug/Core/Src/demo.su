@@ -1,0 +1,3 @@
+demo.c:111:13:demoNotif	24	static
+demo.c:145:6:demoIni	24	static
+demo.c:183:7:demoCycle	8	static

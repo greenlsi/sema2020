@@ -1,0 +1,67 @@
+18/02/2020
+- Lectura de NFC IDs.
+- Definida estructura para datos: NFCID y timestamps.
+- Creada libreria para manejar la estructura de datos: my_utils.c y my_utils.h
+- To Do: Definir tamaño array timestamps y array estructuras. Definir qué sucede al
+		 sobrepasar el limite.
+		 ¿Plantilla para libreria?
+		 Adecentar prints.
+
+19/02/2020
+- Creacion estructuras hecha
+- (Si se supera limite de array de datos, unicamente se procesa NFC IDs ya registrados. Se ignoran nuevos).
+- Sobreescritura de timestamps.
+- Sobreescritura array de datos (falta testear).
+- To do:  
+	--Sobrescritura de array solo desde inicio.
+	Mirar fecha hora a traves de NFC.
+	Sacar datos para un solo NFC:
+		{TimeStamp entrada (pares), parada }
+		{TimeStamp salida (impares), parada}
+		Timestamps han de ser consecutivos (obviamente).
+	Quizá seguir jugando con el mismo data.index para las paradas tambien. Array nuevo.
+	Luego array bidimensional:
+		{{timestamp_in, parada, timestamp_out, parada},
+			{timestamp_in, parada, timestamp_out, parada}...
+		
+		}
+		
+20/02/2020
+- Sobreescritura de estructuras y timestamp hecho
+- Array de estructuras de informacion de ruta de cada NFC ID hecho
+
+- To do: mirar app android NFC Tools para leer time and date desde movil via NFC.
+- Posible implementación del guardado de los datos en flash para no sobreescribirlos:
+	1. Los arrays (route y data) tienen un tamaño al inicializarse y no varia (?) al actualizarlos
+		size_data = sizeof(array data)
+		size_route = sizeof(array route)
+	2. Por tanto queremos escribir x bytes a partir de la direccion address
+		HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint64_t Data);
+		Si TypeProgram es 64 bits, Data tiene que ser tipo 64 bits PERO nuestro data es una un array:
+			(uint64_t)data? Siendo data un array(data) o array doble (route)?
+	3. Antes de escribir en flash hay que hacer un erase?
+	
+	Habria que saber en cada guardado de datos la direccion por la que empezar:
+		init_address = last_write_address
+	4. Segmentar la flash, dejando espacio suficiente para el programa (tamaño .bin aprox 100KB por lo alto)
+		tocar link script?
+			
+- Flash de 7 sectores (0-6):
+	Sector 0, 1, 2 y 3: 16KB
+	Sector 4 : 64KB
+	Sector 5 y 6: 128KB
+
+26/02/2020:
+- Añadido campo "door" a estructura de ruta: 0 Entrada, 1 Salida.
+- Funciones para volcar info de ruta a fichero .txt en SD: de cada estructura de ruta un string
+- Formato fichero .txt -> CSV
+	String: {NFCID,Timestamp,Stop,Door}
+
+			
+			
+			
+			
+			
+			
+			
+			
