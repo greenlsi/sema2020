@@ -1,12 +1,14 @@
 all: pan
-	./pan -a -f -m10000000 -N semaphore_spec
-	./pan -a -f -m10000000 -N msg_spec
-
+	./pan -a -f -m100000000 -N IMU_spec
+	./pan -a -f  -m100000000 -N ultrasonic_spec
+	./pan -a -f -m100000000 -N semaphore_spec
+	./pan -a -f  -m100000000 -N msg_spec
+	
 pan: pan.c
-	gcc -o pan pan.c
+	gcc -DNFAIR=3 -o pan pan.c
 
-pan.c: model_process.pml
-	spin -a model_process.pml
+pan.c: model.pml
+	spin -a model.pml
 
 clean:
 	rm -rf pan

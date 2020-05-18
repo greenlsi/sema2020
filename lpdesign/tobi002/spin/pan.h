@@ -2,7 +2,7 @@
 #define PAN_H
 
 #define SpinVersion	"Spin Version 6.5.1 -- 20 December 2019"
-#define PanSource	"model_process.pml"
+#define PanSource	"model.pml"
 
 #define G_long	8
 #define G_int	4
@@ -121,15 +121,15 @@
 #endif
 #ifdef NP
 	#define HAS_NP	2
-	#define VERI	6	/* np_ */
+	#define VERI	10	/* np_ */
 #endif
 #if defined(NOCLAIM) && defined(NP)
 	#undef NOCLAIM
 #endif
 #ifndef NOCLAIM
-	#define NCLAIMS	2
+	#define NCLAIMS	4
 	#ifndef NP
-		#define VERI	5
+		#define VERI	9
 	#endif
 #endif
 
@@ -139,42 +139,70 @@ typedef struct S_F_MAP {
 	int upto;
 } S_F_MAP;
 
-#define _nstates5	11	/* msg_spec */
-#define minseq5	163
-#define maxseq5	172
-#define _endstate5	10
+#define _nstates9	21	/* IMU_spec */
+#define minseq9	264
+#define maxseq9	283
+#define _endstate9	20
 
-#define _nstates4	14	/* semaphore_spec */
-#define minseq4	150
-#define maxseq4	162
-#define _endstate4	13
+#define _nstates8	14	/* ultrasonic_spec */
+#define minseq8	251
+#define maxseq8	263
+#define _endstate8	13
 
-#define _nstates3	32	/* entorno */
-#define minseq3	119
-#define maxseq3	149
-#define _endstate3	31
+#define _nstates7	11	/* msg_spec */
+#define minseq7	241
+#define maxseq7	250
+#define _endstate7	10
 
-#define _nstates2	60	/* msg_fsm */
-#define minseq2	60
-#define maxseq2	118
-#define _endstate2	59
+#define _nstates6	14	/* semaphore_spec */
+#define minseq6	228
+#define maxseq6	240
+#define _endstate6	13
 
-#define _nstates1	22	/* typeZone_fsm */
-#define minseq1	39
-#define maxseq1	59
-#define _endstate1	21
+#define _nstates5	47	/* entorno */
+#define minseq5	182
+#define maxseq5	227
+#define _endstate5	46
 
-#define _nstates0	40	/* semaphore_fsm */
+#define _nstates4	60	/* msg_fsm */
+#define minseq4	123
+#define maxseq4	181
+#define _endstate4	59
+
+#define _nstates3	22	/* typeZone_fsm */
+#define minseq3	102
+#define maxseq3	122
+#define _endstate3	21
+
+#define _nstates2	40	/* semaphore_fsm */
+#define minseq2	63
+#define maxseq2	101
+#define _endstate2	39
+
+#define _nstates1	32	/* IMU_fsm */
+#define minseq1	32
+#define maxseq1	62
+#define _endstate1	31
+
+#define _nstates0	33	/* ultrasonic_fsm */
 #define minseq0	0
-#define maxseq0	38
-#define _endstate0	39
+#define maxseq0	31
+#define _endstate0	32
 
+extern short src_ln9[];
+extern short src_ln8[];
+extern short src_ln7[];
+extern short src_ln6[];
 extern short src_ln5[];
 extern short src_ln4[];
 extern short src_ln3[];
 extern short src_ln2[];
 extern short src_ln1[];
 extern short src_ln0[];
+extern S_F_MAP src_file9[];
+extern S_F_MAP src_file8[];
+extern S_F_MAP src_file7[];
+extern S_F_MAP src_file6[];
 extern S_F_MAP src_file5[];
 extern S_F_MAP src_file4[];
 extern S_F_MAP src_file3[];
@@ -182,9 +210,9 @@ extern S_F_MAP src_file2[];
 extern S_F_MAP src_file1[];
 extern S_F_MAP src_file0[];
 
-#define T_ID	unsigned char
-#define _T5	60
-#define _T2	61
+#define T_ID	unsigned short
+#define _T5	92
+#define _T2	93
 #define WS		8 /* word size in bytes */
 #define SYNC	0
 #define ASYNC	0
@@ -199,73 +227,39 @@ extern S_F_MAP src_file0[];
 	#endif
 #endif
 
-typedef struct P5 { /* msg_spec */
+typedef struct P9 { /* IMU_spec */
 	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
+	unsigned _t   : 5; /* proctype */
 	unsigned _p   : 7; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
 #endif
-} P5;
-#define Air5	(sizeof(P5) - 3)
+} P9;
+#define Air9	(sizeof(P9) - 3)
 
-typedef struct P4 { /* semaphore_spec */
+typedef struct P8 { /* ultrasonic_spec */
 	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
+	unsigned _t   : 5; /* proctype */
 	unsigned _p   : 7; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
 #endif
-} P4;
-#define Air4	(sizeof(P4) - 3)
+} P8;
+#define Air8	(sizeof(P8) - 3)
 
-#define Pentorno	((P3 *)_this)
-typedef struct P3 { /* entorno */
+typedef struct P7 { /* msg_spec */
 	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
+	unsigned _t   : 5; /* proctype */
 	unsigned _p   : 7; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
 #endif
-} P3;
-#define Air3	(sizeof(P3) - 3)
+} P7;
+#define Air7	(sizeof(P7) - 3)
 
-#define Pmsg_fsm	((P2 *)_this)
-typedef struct P2 { /* msg_fsm */
+typedef struct P6 { /* semaphore_spec */
 	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
-	unsigned _p   : 7; /* state    */
-#ifdef HAS_PRIORITY
-	unsigned _priority : 8; /* 0..255 */
-#endif
-} P2;
-#define Air2	(sizeof(P2) - 3)
-
-#define PtypeZone_fsm	((P1 *)_this)
-typedef struct P1 { /* typeZone_fsm */
-	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
-	unsigned _p   : 7; /* state    */
-#ifdef HAS_PRIORITY
-	unsigned _priority : 8; /* 0..255 */
-#endif
-} P1;
-#define Air1	(sizeof(P1) - 3)
-
-#define Psemaphore_fsm	((P0 *)_this)
-typedef struct P0 { /* semaphore_fsm */
-	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
-	unsigned _p   : 7; /* state    */
-#ifdef HAS_PRIORITY
-	unsigned _priority : 8; /* 0..255 */
-#endif
-} P0;
-#define Air0	(sizeof(P0) - 3)
-
-typedef struct P6 { /* np_ */
-	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
+	unsigned _t   : 5; /* proctype */
 	unsigned _p   : 7; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
@@ -273,22 +267,98 @@ typedef struct P6 { /* np_ */
 } P6;
 #define Air6	(sizeof(P6) - 3)
 
+#define Pentorno	((P5 *)_this)
+typedef struct P5 { /* entorno */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 7; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P5;
+#define Air5	(sizeof(P5) - 3)
+
+#define Pmsg_fsm	((P4 *)_this)
+typedef struct P4 { /* msg_fsm */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 7; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P4;
+#define Air4	(sizeof(P4) - 3)
+
+#define PtypeZone_fsm	((P3 *)_this)
+typedef struct P3 { /* typeZone_fsm */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 7; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P3;
+#define Air3	(sizeof(P3) - 3)
+
+#define Psemaphore_fsm	((P2 *)_this)
+typedef struct P2 { /* semaphore_fsm */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 7; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P2;
+#define Air2	(sizeof(P2) - 3)
+
+#define PIMU_fsm	((P1 *)_this)
+typedef struct P1 { /* IMU_fsm */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 7; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P1;
+#define Air1	(sizeof(P1) - 3)
+
+#define Pultrasonic_fsm	((P0 *)_this)
+typedef struct P0 { /* ultrasonic_fsm */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 7; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P0;
+#define Air0	(sizeof(P0) - 3)
+
+typedef struct P10 { /* np_ */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 7; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P10;
+#define Air10	(sizeof(P10) - 3)
+
 
 #ifndef NOCLAIM
  #ifndef NP
 	#undef VERI
-	#define VERI	7
+	#define VERI	11
  #endif
-	#define Pclaim	P7
+	#define Pclaim	P11
 
-typedef struct P7 {
+typedef struct P11 {
 	unsigned _pid : 8; /* always zero */
-	unsigned _t   : 4; /* active-claim type  */
+	unsigned _t   : 5; /* active-claim type  */
 	unsigned _p   : 7; /* active-claim state */
-	unsigned _n   : 2; /* active-claim index */
+	unsigned _n   : 3; /* active-claim index */
 	uchar c_cur[NCLAIMS]; /* claim-states */
-} P7;
-	#define Air7	(0)
+} P11;
+	#define Air11	(0)
 
 #endif
 #if defined(BFS) && defined(REACH)
@@ -477,6 +547,14 @@ typedef struct State {
 		unsigned short _event;
 	#endif
 #endif
+	unsigned echo_received : 1;
+	unsigned trigger : 1;
+	unsigned timer_sample_start : 1;
+	unsigned timer_sample_end : 1;
+	unsigned timer_trigger_start : 1;
+	unsigned timer_trigger_end : 1;
+	unsigned timer_IMU_start : 1;
+	unsigned timer_IMU_end : 1;
 	unsigned data : 1;
 	unsigned validData : 1;
 	unsigned semId : 1;
@@ -487,6 +565,9 @@ typedef struct State {
 	uchar typeZone;
 	uchar sem_light;
 	uchar msg;
+	int ultrasonic_state;
+	int IMU_state;
+	int counter;
 	int semaphore_state;
 	int typeZone_state;
 	int msg_state;
@@ -511,24 +592,29 @@ typedef struct TRIX_v6 {
 #endif
 
 #define HAS_TRACK	0
+/* hidden variable: */	uchar average_ready_IMU;
 #define FORWARD_MOVES	"pan.m"
 #define BACKWARD_MOVES	"pan.b"
 #define TRANSITIONS	"pan.t"
-#define _NP_	6
-#define _nstates6	3 /* np_ */
-#define _endstate6	2 /* np_ */
+#define _NP_	10
+#define _nstates10	3 /* np_ */
+#define _endstate10	2 /* np_ */
 
-#define _start6	0 /* np_ */
-#define _start5	6
-#define _start4	5
-#define _start3	28
+#define _start10	0 /* np_ */
+#define _start9	7
+#define _start8	5
+#define _start7	6
+#define _start6	5
+#define _start5	43
+#define _start4	1
+#define _start3	1
 #define _start2	1
 #define _start1	1
 #define _start0	1
 #ifdef NP
 	#define ACCEPT_LAB	1 /* at least 1 in np_ */
 #else
-	#define ACCEPT_LAB	2 /* user-defined accept labels */
+	#define ACCEPT_LAB	5 /* user-defined accept labels */
 #endif
 #ifdef MEMCNT
 	#ifdef MEMLIM
@@ -884,7 +970,7 @@ void qsend(int, int, int);
 #define GLOBAL	7
 #define BAD	8
 #define ALPHA_F	9
-#define NTRANS	62
+#define NTRANS	94
 #if defined(BFS_PAR) || NCORE>1
 	void e_critical(int);
 	void x_critical(int);

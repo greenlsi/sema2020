@@ -18,3 +18,30 @@ T0_init:
 accept_all:
 	skip
 }
+never ultrasonic_spec {    /* !([] ((! (((trigger==1)) && ((timer_trigger_end==1)))) || (<> ((trigger==0))))) */
+T0_init:
+	do
+	:: (! ((! (((trigger==1)) && ((timer_trigger_end==1))))) && ! (((trigger==0)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((trigger==0)))) -> goto accept_S4
+	od;
+}
+never IMU_spec {    /* !(([] ((! (((counter>=(10-1))) && (timer_IMU_end))) || (<> ((IMU_state==2))))) && ([] ((! ((timer_IMU_end==1))) || (<> ((IMU_state==1)))))) */
+T0_init:
+	do
+	:: (! ((! (((counter>=(10-1))) && (timer_IMU_end)))) && ! (((IMU_state==2)))) -> goto accept_S5
+	:: (! ((! ((timer_IMU_end==1)))) && ! (((IMU_state==1)))) -> goto accept_S10
+	:: (1) -> goto T0_init
+	od;
+accept_S5:
+	do
+	:: (! (((IMU_state==2)))) -> goto accept_S5
+	od;
+accept_S10:
+	do
+	:: (! (((IMU_state==1)))) -> goto accept_S10
+	od;
+}

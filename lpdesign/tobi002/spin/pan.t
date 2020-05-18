@@ -22,297 +22,474 @@ settable(void)
 {	Trans *T;
 	Trans *settr(int, int, int, int, int, char *, int, int, int);
 
-	trans = (Trans ***) emalloc(7*sizeof(Trans **));
+	trans = (Trans ***) emalloc(11*sizeof(Trans **));
 
-	/* proctype 5: msg_spec */
+	/* proctype 9: IMU_spec */
 
-	trans[5] = (Trans **) emalloc(11*sizeof(Trans *));
+	trans[9] = (Trans **) emalloc(21*sizeof(Trans *));
 
-	trans[5][7]	= settr(169,0,6,1,0,".(goto)", 0, 2, 0);
-	T = trans[5][6] = settr(168,0,0,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(168,0,3,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(168,0,4,0,0,"DO", 0, 2, 0);
-	T = trans[ 5][3] = settr(165,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(165,2,1,0,0,"ATOMIC", 1, 2, 0);
-	trans[5][1]	= settr(163,0,6,3,3,"(!((!((msg_state==2))||(msg==5))))", 1, 2, 0); /* m: 2 -> 6,0 */
-	reached5[2] = 1;
-	trans[5][2]	= settr(0,0,0,0,0,"assert(!(!((!((msg_state==2))||(msg==5)))))",0,0,0);
-	trans[5][4]	= settr(166,0,6,1,0,"(1)", 0, 2, 0);
-	trans[5][5]	= settr(167,0,6,1,0,"goto T0_init", 0, 2, 0);
-	trans[5][8]	= settr(170,0,9,1,0,"break", 0, 2, 0);
-	trans[5][9]	= settr(171,0,10,1,0,"(1)", 0, 2, 0);
-	trans[5][10]	= settr(172,0,0,4,4,"-end-", 0, 3500, 0);
+	trans[9][8]	= settr(271,0,7,1,0,".(goto)", 0, 2, 0);
+	T = trans[9][7] = settr(270,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(270,0,1,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(270,0,3,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(270,0,5,0,0,"DO", 0, 2, 0);
+	trans[9][1]	= settr(264,0,12,3,0,"((!(!(((counter>=(10-1))&&timer_IMU_end)))&&!((IMU_state==2))))", 1, 2, 0);
+	trans[9][2]	= settr(265,0,12,1,0,"goto accept_S5", 0, 2, 0);
+	trans[9][3]	= settr(266,0,17,4,0,"((!(!((timer_IMU_end==1)))&&!((IMU_state==1))))", 1, 2, 0);
+	trans[9][4]	= settr(267,0,17,1,0,"goto accept_S10", 0, 2, 0);
+	trans[9][5]	= settr(268,0,7,1,0,"(1)", 0, 2, 0);
+	trans[9][6]	= settr(269,0,7,1,0,"goto T0_init", 0, 2, 0);
+	trans[9][9]	= settr(272,0,12,1,0,"break", 0, 2, 0);
+	trans[9][13]	= settr(276,0,12,1,0,".(goto)", 0, 2, 0);
+	T = trans[9][12] = settr(275,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(275,0,10,0,0,"DO", 0, 2, 0);
+	trans[9][10]	= settr(273,0,12,5,0,"(!((IMU_state==2)))", 1, 2, 0);
+	trans[9][11]	= settr(274,0,12,1,0,"goto accept_S5", 0, 2, 0);
+	trans[9][14]	= settr(277,0,17,1,0,"break", 0, 2, 0);
+	trans[9][18]	= settr(281,0,17,1,0,".(goto)", 0, 2, 0);
+	T = trans[9][17] = settr(280,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(280,0,15,0,0,"DO", 0, 2, 0);
+	trans[9][15]	= settr(278,0,17,6,0,"(!((IMU_state==1)))", 1, 2, 0);
+	trans[9][16]	= settr(279,0,17,1,0,"goto accept_S10", 0, 2, 0);
+	trans[9][19]	= settr(282,0,20,1,0,"break", 0, 2, 0);
+	trans[9][20]	= settr(283,0,0,7,7,"-end-", 0, 3500, 0);
 
-	/* proctype 4: semaphore_spec */
+	/* proctype 8: ultrasonic_spec */
 
-	trans[4] = (Trans **) emalloc(14*sizeof(Trans *));
+	trans[8] = (Trans **) emalloc(14*sizeof(Trans *));
 
-	trans[4][6]	= settr(155,0,5,1,0,".(goto)", 0, 2, 0);
-	T = trans[4][5] = settr(154,0,0,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(154,0,1,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(154,0,3,0,0,"DO", 0, 2, 0);
-	trans[4][1]	= settr(150,0,10,5,0,"((!(!(((data&&validData)&&(semaphore_state==0))))&&!((semId!=0))))", 1, 2, 0);
-	trans[4][2]	= settr(151,0,10,1,0,"goto accept_S4", 0, 2, 0);
-	trans[4][3]	= settr(152,0,5,1,0,"(1)", 0, 2, 0);
-	trans[4][4]	= settr(153,0,5,1,0,"goto T0_init", 0, 2, 0);
-	trans[4][7]	= settr(156,0,10,1,0,"break", 0, 2, 0);
-	trans[4][11]	= settr(160,0,10,1,0,".(goto)", 0, 2, 0);
-	T = trans[4][10] = settr(159,0,0,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(159,0,8,0,0,"DO", 0, 2, 0);
-	trans[4][8]	= settr(157,0,10,6,0,"(!((semId!=0)))", 1, 2, 0);
-	trans[4][9]	= settr(158,0,10,1,0,"goto accept_S4", 0, 2, 0);
-	trans[4][12]	= settr(161,0,13,1,0,"break", 0, 2, 0);
-	trans[4][13]	= settr(162,0,0,7,7,"-end-", 0, 3500, 0);
+	trans[8][6]	= settr(256,0,5,1,0,".(goto)", 0, 2, 0);
+	T = trans[8][5] = settr(255,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(255,0,1,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(255,0,3,0,0,"DO", 0, 2, 0);
+	trans[8][1]	= settr(251,0,10,8,0,"((!(!(((trigger==1)&&(timer_trigger_end==1))))&&!((trigger==0))))", 1, 2, 0);
+	trans[8][2]	= settr(252,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[8][3]	= settr(253,0,5,1,0,"(1)", 0, 2, 0);
+	trans[8][4]	= settr(254,0,5,1,0,"goto T0_init", 0, 2, 0);
+	trans[8][7]	= settr(257,0,10,1,0,"break", 0, 2, 0);
+	trans[8][11]	= settr(261,0,10,1,0,".(goto)", 0, 2, 0);
+	T = trans[8][10] = settr(260,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(260,0,8,0,0,"DO", 0, 2, 0);
+	trans[8][8]	= settr(258,0,10,9,0,"(!((trigger==0)))", 1, 2, 0);
+	trans[8][9]	= settr(259,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[8][12]	= settr(262,0,13,1,0,"break", 0, 2, 0);
+	trans[8][13]	= settr(263,0,0,10,10,"-end-", 0, 3500, 0);
 
-	/* proctype 3: entorno */
+	/* proctype 7: msg_spec */
 
-	trans[3] = (Trans **) emalloc(32*sizeof(Trans *));
+	trans[7] = (Trans **) emalloc(11*sizeof(Trans *));
 
-	trans[3][29]	= settr(147,0,28,1,0,".(goto)", 0, 2, 0);
-	T = trans[3][28] = settr(146,0,0,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(146,0,1,0,0,"DO", 0, 2, 0);
-	trans[3][1]	= settr(119,0,27,1,0,"(1)", 0, 2, 0);
-	T = trans[ 3][27] = settr(145,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(145,2,23,0,0,"ATOMIC", 1, 2, 0);
-	T = trans[3][23] = settr(141,2,0,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(141,2,2,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(141,2,3,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(141,2,5,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(141,2,8,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(141,2,11,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(141,2,14,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(141,2,17,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(141,2,20,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(141,2,21,0,0,"IF", 1, 2, 0);
-	    T->nxt	= settr(141,2,22,0,0,"IF", 1, 2, 0);
-	trans[3][2]	= settr(120,0,28,8,8,"data = 1", 1, 2, 0); /* m: 25 -> 0,28 */
-	reached3[25] = 1;
-	trans[3][24]	= settr(142,2,25,1,0,".(goto)", 1, 2, 0); /* m: 25 -> 0,28 */
-	reached3[25] = 1;
-	trans[3][3]	= settr(121,0,28,9,9,"(data)", 1, 2, 0); /* m: 4 -> 28,0 */
+	trans[7][7]	= settr(247,0,6,1,0,".(goto)", 0, 2, 0);
+	T = trans[7][6] = settr(246,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(246,0,3,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(246,0,4,0,0,"DO", 0, 2, 0);
+	T = trans[ 7][3] = settr(243,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(243,2,1,0,0,"ATOMIC", 1, 2, 0);
+	trans[7][1]	= settr(241,0,6,11,11,"(!((!((msg_state==2))||(msg==5))))", 1, 2, 0); /* m: 2 -> 6,0 */
+	reached7[2] = 1;
+	trans[7][2]	= settr(0,0,0,0,0,"assert(!(!((!((msg_state==2))||(msg==5)))))",0,0,0);
+	trans[7][4]	= settr(244,0,6,1,0,"(1)", 0, 2, 0);
+	trans[7][5]	= settr(245,0,6,1,0,"goto T0_init", 0, 2, 0);
+	trans[7][8]	= settr(248,0,9,1,0,"break", 0, 2, 0);
+	trans[7][9]	= settr(249,0,10,1,0,"(1)", 0, 2, 0);
+	trans[7][10]	= settr(250,0,0,12,12,"-end-", 0, 3500, 0);
+
+	/* proctype 6: semaphore_spec */
+
+	trans[6] = (Trans **) emalloc(14*sizeof(Trans *));
+
+	trans[6][6]	= settr(233,0,5,1,0,".(goto)", 0, 2, 0);
+	T = trans[6][5] = settr(232,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(232,0,1,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(232,0,3,0,0,"DO", 0, 2, 0);
+	trans[6][1]	= settr(228,0,10,13,0,"((!(!(((data&&validData)&&(semaphore_state==0))))&&!((semId!=0))))", 1, 2, 0);
+	trans[6][2]	= settr(229,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[6][3]	= settr(230,0,5,1,0,"(1)", 0, 2, 0);
+	trans[6][4]	= settr(231,0,5,1,0,"goto T0_init", 0, 2, 0);
+	trans[6][7]	= settr(234,0,10,1,0,"break", 0, 2, 0);
+	trans[6][11]	= settr(238,0,10,1,0,".(goto)", 0, 2, 0);
+	T = trans[6][10] = settr(237,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(237,0,8,0,0,"DO", 0, 2, 0);
+	trans[6][8]	= settr(235,0,10,14,0,"(!((semId!=0)))", 1, 2, 0);
+	trans[6][9]	= settr(236,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[6][12]	= settr(239,0,13,1,0,"break", 0, 2, 0);
+	trans[6][13]	= settr(240,0,0,15,15,"-end-", 0, 3500, 0);
+
+	/* proctype 5: entorno */
+
+	trans[5] = (Trans **) emalloc(47*sizeof(Trans *));
+
+	trans[5][44]	= settr(225,0,43,1,0,".(goto)", 0, 2, 0);
+	T = trans[5][43] = settr(224,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(224,0,1,0,0,"DO", 0, 2, 0);
+	trans[5][1]	= settr(182,0,42,1,0,"(1)", 0, 2, 0);
+	T = trans[ 5][42] = settr(223,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(223,2,38,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[5][38] = settr(219,2,0,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,2,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,4,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,7,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,10,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,12,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,14,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,17,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,18,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,20,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,23,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,26,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,29,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,32,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,35,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(219,2,36,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(219,2,37,0,0,"IF", 1, 2, 0);
+	trans[5][2]	= settr(183,0,43,16,16,"(!(timer_sample_start))", 1, 2, 0); /* m: 3 -> 43,0 */
+	reached5[3] = 1;
+	trans[5][3]	= settr(0,0,0,0,0,"timer_sample_start = 1",0,0,0);
+	trans[5][39]	= settr(220,2,40,1,0,".(goto)", 1, 2, 0); /* m: 40 -> 0,43 */
+	reached5[40] = 1;
+	trans[5][4]	= settr(185,0,43,17,17,"(timer_sample_start)", 1, 2, 0); /* m: 5 -> 43,0 */
+	reached5[5] = 1;
+	trans[5][5]	= settr(0,0,0,0,0,"timer_sample_start = 0",0,0,0);
+	trans[5][6]	= settr(0,0,0,0,0,"timer_sample_end = 1",0,0,0);
+	trans[5][7]	= settr(188,0,43,18,18,"(timer_trigger_start)", 1, 2, 0); /* m: 8 -> 43,0 */
+	reached5[8] = 1;
+	trans[5][8]	= settr(0,0,0,0,0,"timer_trigger_start = 0",0,0,0);
+	trans[5][9]	= settr(0,0,0,0,0,"timer_trigger_end = 1",0,0,0);
+	trans[5][10]	= settr(191,0,43,19,19,"(((echo_received==0)&&(ultrasonic_state==2)))", 1, 2, 0); /* m: 11 -> 43,0 */
+	reached5[11] = 1;
+	trans[5][11]	= settr(0,0,0,0,0,"echo_received = 1",0,0,0);
+	trans[5][12]	= settr(193,0,43,20,20,"(!(timer_IMU_start))", 1, 2, 0); /* m: 13 -> 43,0 */
+	reached5[13] = 1;
+	trans[5][13]	= settr(0,0,0,0,0,"timer_IMU_start = 1",0,0,0);
+	trans[5][14]	= settr(195,0,43,21,21,"(timer_IMU_start)", 1, 2, 0); /* m: 15 -> 43,0 */
+	reached5[15] = 1;
+	trans[5][15]	= settr(0,0,0,0,0,"timer_IMU_start = 0",0,0,0);
+	trans[5][16]	= settr(0,0,0,0,0,"timer_IMU_end = 1",0,0,0);
+	trans[5][17]	= settr(198,0,43,22,22,"data = 1", 1, 2, 0); /* m: 40 -> 0,43 */
+	reached5[40] = 1;
+	trans[5][18]	= settr(199,0,43,23,23,"(data)", 1, 2, 0); /* m: 19 -> 43,0 */
+	reached5[19] = 1;
+	trans[5][19]	= settr(0,0,0,0,0,"validData = 1",0,0,0);
+	trans[5][20]	= settr(201,0,43,24,24,"changePos = 1", 1, 2, 0); /* m: 21 -> 0,43 */
+	reached5[21] = 1;
+	trans[5][21]	= settr(0,0,0,0,0,"changePos_typeZone = 1",0,0,0);
+	trans[5][22]	= settr(0,0,0,0,0,"moving = 1",0,0,0);
+	trans[5][23]	= settr(204,0,43,25,25,"((semId&&sem_read))", 1, 2, 0); /* m: 24 -> 43,0 */
+	reached5[24] = 1;
+	trans[5][24]	= settr(0,0,0,0,0,"sem_light = 1",0,0,0);
+	trans[5][25]	= settr(0,0,0,0,0,"sem_read = 0",0,0,0);
+	trans[5][26]	= settr(207,0,43,26,26,"((semId&&sem_read))", 1, 2, 0); /* m: 27 -> 43,0 */
+	reached5[27] = 1;
+	trans[5][27]	= settr(0,0,0,0,0,"sem_light = 2",0,0,0);
+	trans[5][28]	= settr(0,0,0,0,0,"sem_read = 0",0,0,0);
+	trans[5][29]	= settr(210,0,43,27,27,"((semId&&sem_read))", 1, 2, 0); /* m: 30 -> 43,0 */
+	reached5[30] = 1;
+	trans[5][30]	= settr(0,0,0,0,0,"sem_light = 3",0,0,0);
+	trans[5][31]	= settr(0,0,0,0,0,"sem_read = 0",0,0,0);
+	trans[5][32]	= settr(213,0,43,28,28,"((!(semId)&&sem_read))", 1, 2, 0); /* m: 33 -> 43,0 */
+	reached5[33] = 1;
+	trans[5][33]	= settr(0,0,0,0,0,"sem_light = 0",0,0,0);
+	trans[5][34]	= settr(0,0,0,0,0,"sem_read = 0",0,0,0);
+	trans[5][35]	= settr(216,0,43,29,29,"moving = 1", 1, 2, 0); /* m: 40 -> 0,43 */
+	reached5[40] = 1;
+	trans[5][36]	= settr(217,0,43,30,30,"moving = 0", 1, 2, 0); /* m: 40 -> 0,43 */
+	reached5[40] = 1;
+	trans[5][37]	= settr(218,0,43,31,31,"(1)", 1, 2, 0); /* m: 40 -> 43,0 */
+	reached5[40] = 1;
+	trans[5][40]	= settr(221,0,43,32,32,"printf('data: %d   validData: %d   changePos: %d   state: %d\\n',data,validData,changePos,semaphore_state)", 1, 2, 0); /* m: 41 -> 0,43 */
+	reached5[41] = 1;
+	trans[5][41]	= settr(0,0,0,0,0,"printf('msg_state: %d   sem_light: %d   moving: %d  typeZone: %d \\n',msg_state,sem_light,moving,typeZone)",0,0,0);
+	trans[5][45]	= settr(226,0,46,1,0,"break", 0, 2, 0);
+	trans[5][46]	= settr(227,0,0,33,33,"-end-", 0, 3500, 0);
+
+	/* proctype 4: msg_fsm */
+
+	trans[4] = (Trans **) emalloc(60*sizeof(Trans *));
+
+	trans[4][1]	= settr(123,0,56,34,34,"msg_state = 0", 1, 2, 0);
+	trans[4][57]	= settr(179,0,56,1,0,".(goto)", 0, 2, 0);
+	T = trans[4][56] = settr(178,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(178,0,2,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(178,0,24,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(178,0,46,0,0,"DO", 0, 2, 0);
+	trans[4][2]	= settr(124,0,23,35,0,"((msg_state==0))", 1, 2, 0);
+	T = trans[ 4][23] = settr(145,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(145,2,21,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[4][21] = settr(143,2,0,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(143,2,3,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(143,2,6,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(143,2,9,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(143,2,12,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(143,2,15,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(143,2,18,0,0,"IF", 1, 2, 0);
+	trans[4][3]	= settr(125,0,56,36,36,"(((sem_light==0)&&(typeZone==0)))", 1, 2, 0); /* m: 4 -> 56,0 */
+	reached4[4] = 1;
+	trans[4][4]	= settr(0,0,0,0,0,"msg = 0",0,0,0);
+	trans[4][5]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
+	trans[4][22]	= settr(144,0,56,37,37,".(goto)", 1, 2, 0);
+	trans[4][6]	= settr(128,0,56,38,38,"(((sem_light==1)&&(typeZone==0)))", 1, 2, 0); /* m: 7 -> 56,0 */
+	reached4[7] = 1;
+	trans[4][7]	= settr(0,0,0,0,0,"msg = 2",0,0,0);
+	trans[4][8]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
+	trans[4][9]	= settr(131,0,56,39,39,"(((sem_light==2)&&(typeZone==0)))", 1, 2, 0); /* m: 10 -> 56,0 */
+	reached4[10] = 1;
+	trans[4][10]	= settr(0,0,0,0,0,"msg = 2",0,0,0);
+	trans[4][11]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
+	trans[4][12]	= settr(134,0,56,40,40,"(((sem_light==3)&&(typeZone==0)))", 1, 2, 0); /* m: 13 -> 56,0 */
+	reached4[13] = 1;
+	trans[4][13]	= settr(0,0,0,0,0,"msg = 1",0,0,0);
+	trans[4][14]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
+	trans[4][15]	= settr(137,0,56,41,41,"((typeZone==1))", 1, 2, 0); /* m: 16 -> 56,0 */
+	reached4[16] = 1;
+	trans[4][16]	= settr(0,0,0,0,0,"msg = 0",0,0,0);
+	trans[4][17]	= settr(0,0,0,0,0,"msg_state = 1",0,0,0);
+	trans[4][18]	= settr(140,0,56,42,42,"((typeZone==2))", 1, 2, 0); /* m: 19 -> 56,0 */
+	reached4[19] = 1;
+	trans[4][19]	= settr(0,0,0,0,0,"msg = 5",0,0,0);
+	trans[4][20]	= settr(0,0,0,0,0,"msg_state = 2",0,0,0);
+	trans[4][24]	= settr(146,0,45,43,0,"((msg_state==1))", 1, 2, 0);
+	T = trans[ 4][45] = settr(167,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(167,2,43,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[4][43] = settr(165,2,0,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(165,2,25,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(165,2,28,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(165,2,31,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(165,2,34,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(165,2,37,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(165,2,40,0,0,"IF", 1, 2, 0);
+	trans[4][25]	= settr(147,0,56,44,44,"((((sem_light==2)&&(typeZone==1))&&moving))", 1, 2, 0); /* m: 26 -> 56,0 */
+	reached4[26] = 1;
+	trans[4][26]	= settr(0,0,0,0,0,"msg = 3",0,0,0);
+	trans[4][27]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
+	trans[4][44]	= settr(166,0,56,45,45,".(goto)", 1, 2, 0);
+	trans[4][28]	= settr(150,0,56,46,46,"((((sem_light==1)&&(typeZone==1))&&moving))", 1, 2, 0); /* m: 29 -> 56,0 */
+	reached4[29] = 1;
+	trans[4][29]	= settr(0,0,0,0,0,"msg = 4",0,0,0);
+	trans[4][30]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
+	trans[4][31]	= settr(153,0,56,47,47,"((typeZone==2))", 1, 2, 0); /* m: 32 -> 56,0 */
+	reached4[32] = 1;
+	trans[4][32]	= settr(0,0,0,0,0,"msg = 5",0,0,0);
+	trans[4][33]	= settr(0,0,0,0,0,"msg_state = 2",0,0,0);
+	trans[4][34]	= settr(156,0,56,48,48,"((typeZone==0))", 1, 2, 0); /* m: 35 -> 56,0 */
+	reached4[35] = 1;
+	trans[4][35]	= settr(0,0,0,0,0,"msg = 0",0,0,0);
+	trans[4][36]	= settr(0,0,0,0,0,"msg_state = 0",0,0,0);
+	trans[4][37]	= settr(159,0,56,49,49,"(((!(moving)&&(typeZone==1))&&(sem_light!=0)))", 1, 2, 0); /* m: 38 -> 56,0 */
+	reached4[38] = 1;
+	trans[4][38]	= settr(0,0,0,0,0,"msg = 5",0,0,0);
+	trans[4][39]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
+	trans[4][40]	= settr(162,0,56,50,50,"(((sem_light==0)&&(typeZone==1)))", 1, 2, 0); /* m: 41 -> 56,0 */
+	reached4[41] = 1;
+	trans[4][41]	= settr(0,0,0,0,0,"msg = 0",0,0,0);
+	trans[4][42]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
+	trans[4][46]	= settr(168,0,55,51,0,"((msg_state==2))", 1, 2, 0);
+	T = trans[ 4][55] = settr(177,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(177,2,53,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[4][53] = settr(175,2,0,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(175,2,47,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(175,2,50,0,0,"IF", 1, 2, 0);
+	trans[4][47]	= settr(169,0,56,52,52,"((typeZone==0))", 1, 2, 0); /* m: 48 -> 56,0 */
+	reached4[48] = 1;
+	trans[4][48]	= settr(0,0,0,0,0,"msg = 6",0,0,0);
+	trans[4][49]	= settr(0,0,0,0,0,"msg_state = 0",0,0,0);
+	trans[4][54]	= settr(176,0,56,53,53,".(goto)", 1, 2, 0);
+	trans[4][50]	= settr(172,0,56,54,54,"((typeZone==1))", 1, 2, 0); /* m: 51 -> 56,0 */
+	reached4[51] = 1;
+	trans[4][51]	= settr(0,0,0,0,0,"msg = 6",0,0,0);
+	trans[4][52]	= settr(0,0,0,0,0,"msg_state = 1",0,0,0);
+	trans[4][58]	= settr(180,0,59,1,0,"break", 0, 2, 0);
+	trans[4][59]	= settr(181,0,0,55,55,"-end-", 0, 3500, 0);
+
+	/* proctype 3: typeZone_fsm */
+
+	trans[3] = (Trans **) emalloc(22*sizeof(Trans *));
+
+	trans[3][1]	= settr(102,0,18,56,56,"typeZone_state = 0", 1, 2, 0);
+	trans[3][19]	= settr(120,0,18,1,0,".(goto)", 0, 2, 0);
+	T = trans[3][18] = settr(119,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(119,0,2,0,0,"DO", 0, 2, 0);
+	trans[3][2]	= settr(103,0,17,57,0,"((typeZone_state==0))", 1, 2, 0);
+	T = trans[ 3][17] = settr(118,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(118,2,15,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[3][15] = settr(116,2,0,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(116,2,3,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(116,2,7,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(116,2,11,0,0,"IF", 1, 2, 0);
+	trans[3][3]	= settr(104,0,18,58,58,"(changePos_typeZone)", 1, 2, 0); /* m: 4 -> 18,0 */
 	reached3[4] = 1;
-	trans[3][4]	= settr(0,0,0,0,0,"validData = 1",0,0,0);
-	trans[3][5]	= settr(123,0,28,10,10,"changePos = 1", 1, 2, 0); /* m: 6 -> 0,28 */
-	reached3[6] = 1;
-	trans[3][6]	= settr(0,0,0,0,0,"changePos_typeZone = 1",0,0,0);
-	trans[3][7]	= settr(0,0,0,0,0,"moving = 1",0,0,0);
-	trans[3][8]	= settr(126,0,28,11,11,"((semId&&sem_read))", 1, 2, 0); /* m: 9 -> 28,0 */
-	reached3[9] = 1;
-	trans[3][9]	= settr(0,0,0,0,0,"sem_light = 1",0,0,0);
-	trans[3][10]	= settr(0,0,0,0,0,"sem_read = 0",0,0,0);
-	trans[3][11]	= settr(129,0,28,12,12,"((semId&&sem_read))", 1, 2, 0); /* m: 12 -> 28,0 */
+	trans[3][4]	= settr(0,0,0,0,0,"printf('Selecting ACERA...\\n')",0,0,0);
+	trans[3][5]	= settr(0,0,0,0,0,"changePos_typeZone = 0",0,0,0);
+	trans[3][6]	= settr(0,0,0,0,0,"typeZone = 0",0,0,0);
+	trans[3][16]	= settr(117,0,18,59,59,".(goto)", 1, 2, 0);
+	trans[3][7]	= settr(108,0,18,60,60,"(changePos_typeZone)", 1, 2, 0); /* m: 8 -> 18,0 */
+	reached3[8] = 1;
+	trans[3][8]	= settr(0,0,0,0,0,"printf('Selecting PASO...\\n')",0,0,0);
+	trans[3][9]	= settr(0,0,0,0,0,"changePos_typeZone = 0",0,0,0);
+	trans[3][10]	= settr(0,0,0,0,0,"typeZone = 1",0,0,0);
+	trans[3][11]	= settr(112,0,18,61,61,"(changePos_typeZone)", 1, 2, 0); /* m: 12 -> 18,0 */
 	reached3[12] = 1;
-	trans[3][12]	= settr(0,0,0,0,0,"sem_light = 2",0,0,0);
-	trans[3][13]	= settr(0,0,0,0,0,"sem_read = 0",0,0,0);
-	trans[3][14]	= settr(132,0,28,13,13,"((semId&&sem_read))", 1, 2, 0); /* m: 15 -> 28,0 */
-	reached3[15] = 1;
-	trans[3][15]	= settr(0,0,0,0,0,"sem_light = 3",0,0,0);
-	trans[3][16]	= settr(0,0,0,0,0,"sem_read = 0",0,0,0);
-	trans[3][17]	= settr(135,0,28,14,14,"((!(semId)&&sem_read))", 1, 2, 0); /* m: 18 -> 28,0 */
-	reached3[18] = 1;
-	trans[3][18]	= settr(0,0,0,0,0,"sem_light = 0",0,0,0);
-	trans[3][19]	= settr(0,0,0,0,0,"sem_read = 0",0,0,0);
-	trans[3][20]	= settr(138,0,28,15,15,"moving = 1", 1, 2, 0); /* m: 25 -> 0,28 */
-	reached3[25] = 1;
-	trans[3][21]	= settr(139,0,28,16,16,"moving = 0", 1, 2, 0); /* m: 25 -> 0,28 */
-	reached3[25] = 1;
-	trans[3][22]	= settr(140,0,28,17,17,"(1)", 1, 2, 0); /* m: 25 -> 28,0 */
-	reached3[25] = 1;
-	trans[3][25]	= settr(143,0,28,18,18,"printf('data: %d   validData: %d   changePos: %d   state: %d\\n',data,validData,changePos,semaphore_state)", 1, 2, 0); /* m: 26 -> 0,28 */
-	reached3[26] = 1;
-	trans[3][26]	= settr(0,0,0,0,0,"printf('msg_state: %d   sem_light: %d   moving: %d  typeZone: %d \\n',msg_state,sem_light,moving,typeZone)",0,0,0);
-	trans[3][30]	= settr(148,0,31,1,0,"break", 0, 2, 0);
-	trans[3][31]	= settr(149,0,0,19,19,"-end-", 0, 3500, 0);
+	trans[3][12]	= settr(0,0,0,0,0,"printf('Selecting CARRETERA...\\n')",0,0,0);
+	trans[3][13]	= settr(0,0,0,0,0,"changePos_typeZone = 0",0,0,0);
+	trans[3][14]	= settr(0,0,0,0,0,"typeZone = 2",0,0,0);
+	trans[3][20]	= settr(121,0,21,1,0,"break", 0, 2, 0);
+	trans[3][21]	= settr(122,0,0,62,62,"-end-", 0, 3500, 0);
 
-	/* proctype 2: msg_fsm */
+	/* proctype 2: semaphore_fsm */
 
-	trans[2] = (Trans **) emalloc(60*sizeof(Trans *));
+	trans[2] = (Trans **) emalloc(40*sizeof(Trans *));
 
-	trans[2][1]	= settr(60,0,56,20,20,"msg_state = 0", 1, 2, 0);
-	trans[2][57]	= settr(116,0,56,1,0,".(goto)", 0, 2, 0);
-	T = trans[2][56] = settr(115,0,0,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(115,0,2,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(115,0,24,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(115,0,46,0,0,"DO", 0, 2, 0);
-	trans[2][2]	= settr(61,0,23,21,0,"((msg_state==0))", 1, 2, 0);
-	T = trans[ 2][23] = settr(82,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(82,2,21,0,0,"ATOMIC", 1, 2, 0);
-	T = trans[2][21] = settr(80,2,0,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(80,2,3,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(80,2,6,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(80,2,9,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(80,2,12,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(80,2,15,0,0,"IF", 1, 2, 0);
-	    T->nxt	= settr(80,2,18,0,0,"IF", 1, 2, 0);
-	trans[2][3]	= settr(62,0,56,22,22,"(((sem_light==0)&&(typeZone==0)))", 1, 2, 0); /* m: 4 -> 56,0 */
+	trans[2][1]	= settr(63,0,36,63,63,"semaphore_state = 0", 1, 2, 0);
+	trans[2][37]	= settr(99,0,36,1,0,".(goto)", 0, 2, 0);
+	T = trans[2][36] = settr(98,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(98,0,2,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(98,0,17,0,0,"DO", 0, 2, 0);
+	trans[2][2]	= settr(64,0,16,64,0,"((semaphore_state==0))", 1, 2, 0);
+	T = trans[ 2][16] = settr(78,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(78,2,14,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[2][14] = settr(76,2,0,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(76,2,3,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(76,2,9,0,0,"IF", 1, 2, 0);
+	trans[2][3]	= settr(65,0,36,65,65,"((data&&validData))", 1, 2, 0); /* m: 4 -> 36,0 */
 	reached2[4] = 1;
-	trans[2][4]	= settr(0,0,0,0,0,"msg = 0",0,0,0);
-	trans[2][5]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
-	trans[2][22]	= settr(81,0,56,23,23,".(goto)", 1, 2, 0);
-	trans[2][6]	= settr(65,0,56,24,24,"(((sem_light==1)&&(typeZone==0)))", 1, 2, 0); /* m: 7 -> 56,0 */
-	reached2[7] = 1;
-	trans[2][7]	= settr(0,0,0,0,0,"msg = 2",0,0,0);
-	trans[2][8]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
-	trans[2][9]	= settr(68,0,56,25,25,"(((sem_light==2)&&(typeZone==0)))", 1, 2, 0); /* m: 10 -> 56,0 */
+	trans[2][4]	= settr(0,0,0,0,0,"printf('Change to SEL_SEM... Selecting semaphore 1...\\n')",0,0,0);
+	trans[2][5]	= settr(0,0,0,0,0,"validData = 0",0,0,0);
+	trans[2][6]	= settr(0,0,0,0,0,"data = 0",0,0,0);
+	trans[2][7]	= settr(0,0,0,0,0,"semId = 1",0,0,0);
+	trans[2][8]	= settr(0,0,0,0,0,"semaphore_state = 1",0,0,0);
+	trans[2][15]	= settr(77,0,36,66,66,".(goto)", 1, 2, 0);
+	trans[2][9]	= settr(71,0,36,67,67,"((data&&!(validData)))", 1, 2, 0); /* m: 10 -> 36,0 */
 	reached2[10] = 1;
-	trans[2][10]	= settr(0,0,0,0,0,"msg = 2",0,0,0);
-	trans[2][11]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
-	trans[2][12]	= settr(71,0,56,26,26,"(((sem_light==3)&&(typeZone==0)))", 1, 2, 0); /* m: 13 -> 56,0 */
-	reached2[13] = 1;
-	trans[2][13]	= settr(0,0,0,0,0,"msg = 1",0,0,0);
-	trans[2][14]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
-	trans[2][15]	= settr(74,0,56,27,27,"((typeZone==1))", 1, 2, 0); /* m: 16 -> 56,0 */
-	reached2[16] = 1;
-	trans[2][16]	= settr(0,0,0,0,0,"msg = 0",0,0,0);
-	trans[2][17]	= settr(0,0,0,0,0,"msg_state = 1",0,0,0);
-	trans[2][18]	= settr(77,0,56,28,28,"((typeZone==2))", 1, 2, 0); /* m: 19 -> 56,0 */
+	trans[2][10]	= settr(0,0,0,0,0,"printf('Change to SEL_SEM... Selecting semaphore None...\\n')",0,0,0);
+	trans[2][11]	= settr(0,0,0,0,0,"data = 0",0,0,0);
+	trans[2][12]	= settr(0,0,0,0,0,"semId = 0",0,0,0);
+	trans[2][13]	= settr(0,0,0,0,0,"semaphore_state = 1",0,0,0);
+	trans[2][17]	= settr(79,0,35,68,0,"((semaphore_state==1))", 1, 2, 0);
+	T = trans[ 2][35] = settr(97,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(97,2,33,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[2][33] = settr(95,2,0,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(95,2,18,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(95,2,24,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(95,2,29,0,0,"IF", 1, 2, 0);
+	trans[2][18]	= settr(80,0,36,69,69,"(((data&&changePos)&&validData))", 1, 2, 0); /* m: 19 -> 36,0 */
 	reached2[19] = 1;
-	trans[2][19]	= settr(0,0,0,0,0,"msg = 5",0,0,0);
-	trans[2][20]	= settr(0,0,0,0,0,"msg_state = 2",0,0,0);
-	trans[2][24]	= settr(83,0,45,29,0,"((msg_state==1))", 1, 2, 0);
-	T = trans[ 2][45] = settr(104,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(104,2,43,0,0,"ATOMIC", 1, 2, 0);
-	T = trans[2][43] = settr(102,2,0,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(102,2,25,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(102,2,28,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(102,2,31,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(102,2,34,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(102,2,37,0,0,"IF", 1, 2, 0);
-	    T->nxt	= settr(102,2,40,0,0,"IF", 1, 2, 0);
-	trans[2][25]	= settr(84,0,56,30,30,"((((sem_light==2)&&(typeZone==1))&&moving))", 1, 2, 0); /* m: 26 -> 56,0 */
-	reached2[26] = 1;
-	trans[2][26]	= settr(0,0,0,0,0,"msg = 3",0,0,0);
-	trans[2][27]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
-	trans[2][44]	= settr(103,0,56,31,31,".(goto)", 1, 2, 0);
-	trans[2][28]	= settr(87,0,56,32,32,"((((sem_light==1)&&(typeZone==1))&&moving))", 1, 2, 0); /* m: 29 -> 56,0 */
-	reached2[29] = 1;
-	trans[2][29]	= settr(0,0,0,0,0,"msg = 4",0,0,0);
-	trans[2][30]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
-	trans[2][31]	= settr(90,0,56,33,33,"((typeZone==2))", 1, 2, 0); /* m: 32 -> 56,0 */
-	reached2[32] = 1;
-	trans[2][32]	= settr(0,0,0,0,0,"msg = 5",0,0,0);
-	trans[2][33]	= settr(0,0,0,0,0,"msg_state = 2",0,0,0);
-	trans[2][34]	= settr(93,0,56,34,34,"((typeZone==0))", 1, 2, 0); /* m: 35 -> 56,0 */
-	reached2[35] = 1;
-	trans[2][35]	= settr(0,0,0,0,0,"msg = 0",0,0,0);
-	trans[2][36]	= settr(0,0,0,0,0,"msg_state = 0",0,0,0);
-	trans[2][37]	= settr(96,0,56,35,35,"(((!(moving)&&(typeZone==1))&&(sem_light!=0)))", 1, 2, 0); /* m: 38 -> 56,0 */
-	reached2[38] = 1;
-	trans[2][38]	= settr(0,0,0,0,0,"msg = 5",0,0,0);
-	trans[2][39]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
-	trans[2][40]	= settr(99,0,56,36,36,"(((sem_light==0)&&(typeZone==1)))", 1, 2, 0); /* m: 41 -> 56,0 */
-	reached2[41] = 1;
-	trans[2][41]	= settr(0,0,0,0,0,"msg = 0",0,0,0);
-	trans[2][42]	= settr(0,0,0,0,0,"sem_read = 1",0,0,0);
-	trans[2][46]	= settr(105,0,55,37,0,"((msg_state==2))", 1, 2, 0);
-	T = trans[ 2][55] = settr(114,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(114,2,53,0,0,"ATOMIC", 1, 2, 0);
-	T = trans[2][53] = settr(112,2,0,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(112,2,47,0,0,"IF", 1, 2, 0);
-	    T->nxt	= settr(112,2,50,0,0,"IF", 1, 2, 0);
-	trans[2][47]	= settr(106,0,56,38,38,"((typeZone==0))", 1, 2, 0); /* m: 48 -> 56,0 */
-	reached2[48] = 1;
-	trans[2][48]	= settr(0,0,0,0,0,"msg = 6",0,0,0);
-	trans[2][49]	= settr(0,0,0,0,0,"msg_state = 0",0,0,0);
-	trans[2][54]	= settr(113,0,56,39,39,".(goto)", 1, 2, 0);
-	trans[2][50]	= settr(109,0,56,40,40,"((typeZone==1))", 1, 2, 0); /* m: 51 -> 56,0 */
-	reached2[51] = 1;
-	trans[2][51]	= settr(0,0,0,0,0,"msg = 6",0,0,0);
-	trans[2][52]	= settr(0,0,0,0,0,"msg_state = 1",0,0,0);
-	trans[2][58]	= settr(117,0,59,1,0,"break", 0, 2, 0);
-	trans[2][59]	= settr(118,0,0,41,41,"-end-", 0, 3500, 0);
+	trans[2][19]	= settr(0,0,0,0,0,"printf('Change to SEL_SEM... Selecting semaphore 1...\\n')",0,0,0);
+	trans[2][20]	= settr(0,0,0,0,0,"validData = 0",0,0,0);
+	trans[2][21]	= settr(0,0,0,0,0,"changePos = 0",0,0,0);
+	trans[2][22]	= settr(0,0,0,0,0,"semId = 1",0,0,0);
+	trans[2][23]	= settr(0,0,0,0,0,"semaphore_state = 1",0,0,0);
+	trans[2][34]	= settr(96,0,36,70,70,".(goto)", 1, 2, 0);
+	trans[2][24]	= settr(86,0,36,71,71,"(((data&&changePos)&&!(validData)))", 1, 2, 0); /* m: 25 -> 36,0 */
+	reached2[25] = 1;
+	trans[2][25]	= settr(0,0,0,0,0,"printf('Change to SEL_SEM... Selecting semaphore None...\\n')",0,0,0);
+	trans[2][26]	= settr(0,0,0,0,0,"changePos = 0",0,0,0);
+	trans[2][27]	= settr(0,0,0,0,0,"semId = 0",0,0,0);
+	trans[2][28]	= settr(0,0,0,0,0,"semaphore_state = 1",0,0,0);
+	trans[2][29]	= settr(91,0,36,72,72,"(!(data))", 1, 2, 0); /* m: 30 -> 36,0 */
+	reached2[30] = 1;
+	trans[2][30]	= settr(0,0,0,0,0,"printf('Change to IDLE_SEM... No data available...\\n')",0,0,0);
+	trans[2][31]	= settr(0,0,0,0,0,"semId = 0",0,0,0);
+	trans[2][32]	= settr(0,0,0,0,0,"semaphore_state = 0",0,0,0);
+	trans[2][38]	= settr(100,0,39,1,0,"break", 0, 2, 0);
+	trans[2][39]	= settr(101,0,0,73,73,"-end-", 0, 3500, 0);
 
-	/* proctype 1: typeZone_fsm */
+	/* proctype 1: IMU_fsm */
 
-	trans[1] = (Trans **) emalloc(22*sizeof(Trans *));
+	trans[1] = (Trans **) emalloc(32*sizeof(Trans *));
 
-	trans[1][1]	= settr(39,0,18,42,42,"typeZone_state = 0", 1, 2, 0);
-	trans[1][19]	= settr(57,0,18,1,0,".(goto)", 0, 2, 0);
-	T = trans[1][18] = settr(56,0,0,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(56,0,2,0,0,"DO", 0, 2, 0);
-	trans[1][2]	= settr(40,0,17,43,0,"((typeZone_state==0))", 1, 2, 0);
-	T = trans[ 1][17] = settr(55,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(55,2,15,0,0,"ATOMIC", 1, 2, 0);
-	T = trans[1][15] = settr(53,2,0,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(53,2,3,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(53,2,7,0,0,"IF", 1, 2, 0);
-	    T->nxt	= settr(53,2,11,0,0,"IF", 1, 2, 0);
-	trans[1][3]	= settr(41,0,18,44,44,"(changePos_typeZone)", 1, 2, 0); /* m: 4 -> 18,0 */
+	trans[1][1]	= settr(32,0,28,74,74,"IMU_state = 0", 1, 2, 0);
+	trans[1][29]	= settr(60,0,28,1,0,".(goto)", 0, 2, 0);
+	T = trans[1][28] = settr(59,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(59,0,2,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(59,0,10,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(59,0,20,0,0,"DO", 0, 2, 0);
+	trans[1][2]	= settr(33,0,9,75,0,"((IMU_state==0))", 1, 2, 0);
+	T = trans[ 1][9] = settr(40,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(40,2,7,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[1][7] = settr(38,2,0,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(38,2,3,0,0,"IF", 1, 2, 0);
+	trans[1][3]	= settr(34,0,28,76,76,"(timer_IMU_end)", 1, 2, 0); /* m: 4 -> 28,0 */
 	reached1[4] = 1;
-	trans[1][4]	= settr(0,0,0,0,0,"printf('Selecting ACERA...\\n')",0,0,0);
-	trans[1][5]	= settr(0,0,0,0,0,"changePos_typeZone = 0",0,0,0);
-	trans[1][6]	= settr(0,0,0,0,0,"typeZone = 0",0,0,0);
-	trans[1][16]	= settr(54,0,18,45,45,".(goto)", 1, 2, 0);
-	trans[1][7]	= settr(45,0,18,46,46,"(changePos_typeZone)", 1, 2, 0); /* m: 8 -> 18,0 */
-	reached1[8] = 1;
-	trans[1][8]	= settr(0,0,0,0,0,"printf('Selecting PASO...\\n')",0,0,0);
-	trans[1][9]	= settr(0,0,0,0,0,"changePos_typeZone = 0",0,0,0);
-	trans[1][10]	= settr(0,0,0,0,0,"typeZone = 1",0,0,0);
-	trans[1][11]	= settr(49,0,18,47,47,"(changePos_typeZone)", 1, 2, 0); /* m: 12 -> 18,0 */
+	trans[1][4]	= settr(0,0,0,0,0,"timer_IMU_end = 0",0,0,0);
+	trans[1][5]	= settr(0,0,0,0,0,"printf('IDLE_IMU...\\n')",0,0,0);
+	trans[1][6]	= settr(0,0,0,0,0,"IMU_state = 1",0,0,0);
+	trans[1][8]	= settr(39,0,28,1,0,".(goto)", 1, 2, 0);
+	trans[1][10]	= settr(41,0,19,77,0,"((IMU_state==1))", 1, 2, 0);
+	T = trans[ 1][19] = settr(50,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(50,2,17,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[1][17] = settr(48,2,0,0,0,"IF", 1, 2, 0);
+	T = T->nxt	= settr(48,2,11,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(48,2,14,0,0,"IF", 1, 2, 0);
+	trans[1][11]	= settr(42,0,28,78,78,"((counter<(10-1)))", 1, 2, 0); /* m: 12 -> 28,0 */
 	reached1[12] = 1;
-	trans[1][12]	= settr(0,0,0,0,0,"printf('Selecting CARRETERA...\\n')",0,0,0);
-	trans[1][13]	= settr(0,0,0,0,0,"changePos_typeZone = 0",0,0,0);
-	trans[1][14]	= settr(0,0,0,0,0,"typeZone = 2",0,0,0);
-	trans[1][20]	= settr(58,0,21,1,0,"break", 0, 2, 0);
-	trans[1][21]	= settr(59,0,0,48,48,"-end-", 0, 3500, 0);
+	trans[1][12]	= settr(0,0,0,0,0,"IMU_state = 0",0,0,0);
+	trans[1][13]	= settr(0,0,0,0,0,"counter = (counter+1)",0,0,0);
+	trans[1][18]	= settr(49,0,28,79,79,".(goto)", 1, 2, 0);
+	trans[1][14]	= settr(45,0,28,80,80,"((counter>=(10-1)))", 1, 2, 0); /* m: 15 -> 28,0 */
+	reached1[15] = 1;
+	trans[1][15]	= settr(0,0,0,0,0,"counter = (counter+1)",0,0,0);
+	trans[1][16]	= settr(0,0,0,0,0,"IMU_state = 2",0,0,0);
+	trans[1][20]	= settr(51,0,27,81,0,"((IMU_state==2))", 1, 2, 0);
+	T = trans[ 1][27] = settr(58,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(58,2,25,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[1][25] = settr(56,2,0,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(56,2,21,0,0,"IF", 1, 2, 0);
+	trans[1][21]	= settr(52,0,28,82,82,"(1)", 1, 2, 0); /* m: 22 -> 28,0 */
+	reached1[22] = 1;
+	trans[1][22]	= settr(0,0,0,0,0,"counter = 0",0,0,0);
+	trans[1][23]	= settr(0,0,0,0,0,"printf('Calculating average...\\n')",0,0,0);
+	trans[1][24]	= settr(0,0,0,0,0,"IMU_state = 0",0,0,0);
+	trans[1][26]	= settr(57,0,28,1,0,".(goto)", 1, 2, 0);
+	trans[1][30]	= settr(61,0,31,1,0,"break", 0, 2, 0);
+	trans[1][31]	= settr(62,0,0,83,83,"-end-", 0, 3500, 0);
 
-	/* proctype 0: semaphore_fsm */
+	/* proctype 0: ultrasonic_fsm */
 
-	trans[0] = (Trans **) emalloc(40*sizeof(Trans *));
+	trans[0] = (Trans **) emalloc(33*sizeof(Trans *));
 
-	trans[0][1]	= settr(0,0,36,49,49,"semaphore_state = 0", 1, 2, 0);
-	trans[0][37]	= settr(36,0,36,1,0,".(goto)", 0, 2, 0);
-	T = trans[0][36] = settr(35,0,0,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(35,0,2,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(35,0,17,0,0,"DO", 0, 2, 0);
-	trans[0][2]	= settr(1,0,16,50,0,"((semaphore_state==0))", 1, 2, 0);
-	T = trans[ 0][16] = settr(15,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(15,2,14,0,0,"ATOMIC", 1, 2, 0);
-	T = trans[0][14] = settr(13,2,0,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(13,2,3,0,0,"IF", 1, 2, 0);
-	    T->nxt	= settr(13,2,9,0,0,"IF", 1, 2, 0);
-	trans[0][3]	= settr(2,0,36,51,51,"((data&&validData))", 1, 2, 0); /* m: 4 -> 36,0 */
+	trans[0][1]	= settr(0,0,29,84,84,"ultrasonic_state = 0", 1, 2, 0);
+	trans[0][30]	= settr(29,0,29,1,0,".(goto)", 0, 2, 0);
+	T = trans[0][29] = settr(28,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(28,0,2,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(28,0,12,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(28,0,21,0,0,"DO", 0, 2, 0);
+	trans[0][2]	= settr(1,0,11,85,0,"((ultrasonic_state==0))", 1, 2, 0);
+	T = trans[ 0][11] = settr(10,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(10,2,9,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[0][9] = settr(8,2,0,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(8,2,3,0,0,"IF", 1, 2, 0);
+	trans[0][3]	= settr(2,0,29,86,86,"(timer_sample_end)", 1, 2, 0); /* m: 4 -> 29,0 */
 	reached0[4] = 1;
-	trans[0][4]	= settr(0,0,0,0,0,"printf('Change to SEL_SEM... Selecting semaphore 1...\\n')",0,0,0);
-	trans[0][5]	= settr(0,0,0,0,0,"validData = 0",0,0,0);
-	trans[0][6]	= settr(0,0,0,0,0,"data = 0",0,0,0);
-	trans[0][7]	= settr(0,0,0,0,0,"semId = 1",0,0,0);
-	trans[0][8]	= settr(0,0,0,0,0,"semaphore_state = 1",0,0,0);
-	trans[0][15]	= settr(14,0,36,52,52,".(goto)", 1, 2, 0);
-	trans[0][9]	= settr(8,0,36,53,53,"((data&&!(validData)))", 1, 2, 0); /* m: 10 -> 36,0 */
-	reached0[10] = 1;
-	trans[0][10]	= settr(0,0,0,0,0,"printf('Change to SEL_SEM... Selecting semaphore None...\\n')",0,0,0);
-	trans[0][11]	= settr(0,0,0,0,0,"data = 0",0,0,0);
-	trans[0][12]	= settr(0,0,0,0,0,"semId = 0",0,0,0);
-	trans[0][13]	= settr(0,0,0,0,0,"semaphore_state = 1",0,0,0);
-	trans[0][17]	= settr(16,0,35,54,0,"((semaphore_state==1))", 1, 2, 0);
-	T = trans[ 0][35] = settr(34,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(34,2,33,0,0,"ATOMIC", 1, 2, 0);
-	T = trans[0][33] = settr(32,2,0,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(32,2,18,0,0,"IF", 1, 2, 0);
-	T = T->nxt	= settr(32,2,24,0,0,"IF", 1, 2, 0);
-	    T->nxt	= settr(32,2,29,0,0,"IF", 1, 2, 0);
-	trans[0][18]	= settr(17,0,36,55,55,"(((data&&changePos)&&validData))", 1, 2, 0); /* m: 19 -> 36,0 */
-	reached0[19] = 1;
-	trans[0][19]	= settr(0,0,0,0,0,"printf('Change to SEL_SEM... Selecting semaphore 1...\\n')",0,0,0);
-	trans[0][20]	= settr(0,0,0,0,0,"validData = 0",0,0,0);
-	trans[0][21]	= settr(0,0,0,0,0,"changePos = 0",0,0,0);
-	trans[0][22]	= settr(0,0,0,0,0,"semId = 1",0,0,0);
-	trans[0][23]	= settr(0,0,0,0,0,"semaphore_state = 1",0,0,0);
-	trans[0][34]	= settr(33,0,36,56,56,".(goto)", 1, 2, 0);
-	trans[0][24]	= settr(23,0,36,57,57,"(((data&&changePos)&&!(validData)))", 1, 2, 0); /* m: 25 -> 36,0 */
-	reached0[25] = 1;
-	trans[0][25]	= settr(0,0,0,0,0,"printf('Change to SEL_SEM... Selecting semaphore None...\\n')",0,0,0);
-	trans[0][26]	= settr(0,0,0,0,0,"changePos = 0",0,0,0);
-	trans[0][27]	= settr(0,0,0,0,0,"semId = 0",0,0,0);
-	trans[0][28]	= settr(0,0,0,0,0,"semaphore_state = 1",0,0,0);
-	trans[0][29]	= settr(28,0,36,58,58,"(!(data))", 1, 2, 0); /* m: 30 -> 36,0 */
-	reached0[30] = 1;
-	trans[0][30]	= settr(0,0,0,0,0,"printf('Change to IDLE_SEM... No data available...\\n')",0,0,0);
-	trans[0][31]	= settr(0,0,0,0,0,"semId = 0",0,0,0);
-	trans[0][32]	= settr(0,0,0,0,0,"semaphore_state = 0",0,0,0);
-	trans[0][38]	= settr(37,0,39,1,0,"break", 0, 2, 0);
-	trans[0][39]	= settr(38,0,0,59,59,"-end-", 0, 3500, 0);
+	trans[0][4]	= settr(0,0,0,0,0,"printf('IDLE_US...\\n')",0,0,0);
+	trans[0][5]	= settr(0,0,0,0,0,"timer_sample_end = 0",0,0,0);
+	trans[0][6]	= settr(0,0,0,0,0,"ultrasonic_state = 1",0,0,0);
+	trans[0][7]	= settr(0,0,0,0,0,"trigger = 1",0,0,0);
+	trans[0][8]	= settr(0,0,0,0,0,"timer_trigger_start = 1",0,0,0);
+	trans[0][10]	= settr(9,0,29,1,0,".(goto)", 1, 2, 0);
+	trans[0][12]	= settr(11,0,20,87,0,"((ultrasonic_state==1))", 1, 2, 0);
+	T = trans[ 0][20] = settr(19,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(19,2,18,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[0][18] = settr(17,2,0,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(17,2,13,0,0,"IF", 1, 2, 0);
+	trans[0][13]	= settr(12,0,29,88,88,"(timer_trigger_end)", 1, 2, 0); /* m: 14 -> 29,0 */
+	reached0[14] = 1;
+	trans[0][14]	= settr(0,0,0,0,0,"printf('SET_TRIGGER...\\n')",0,0,0);
+	trans[0][15]	= settr(0,0,0,0,0,"timer_trigger_end = 0",0,0,0);
+	trans[0][16]	= settr(0,0,0,0,0,"ultrasonic_state = 2",0,0,0);
+	trans[0][17]	= settr(0,0,0,0,0,"trigger = 0",0,0,0);
+	trans[0][19]	= settr(18,0,29,1,0,".(goto)", 1, 2, 0);
+	trans[0][21]	= settr(20,0,28,89,0,"((ultrasonic_state==2))", 1, 2, 0);
+	T = trans[ 0][28] = settr(27,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(27,2,26,0,0,"ATOMIC", 1, 2, 0);
+	T = trans[0][26] = settr(25,2,0,0,0,"IF", 1, 2, 0);
+	    T->nxt	= settr(25,2,22,0,0,"IF", 1, 2, 0);
+	trans[0][22]	= settr(21,0,29,90,90,"(echo_received)", 1, 2, 0); /* m: 23 -> 29,0 */
+	reached0[23] = 1;
+	trans[0][23]	= settr(0,0,0,0,0,"printf('WAIT_ECHO...\\n')",0,0,0);
+	trans[0][24]	= settr(0,0,0,0,0,"echo_received = 0",0,0,0);
+	trans[0][25]	= settr(0,0,0,0,0,"ultrasonic_state = 0",0,0,0);
+	trans[0][27]	= settr(26,0,29,1,0,".(goto)", 1, 2, 0);
+	trans[0][31]	= settr(30,0,32,1,0,"break", 0, 2, 0);
+	trans[0][32]	= settr(31,0,0,91,91,"-end-", 0, 3500, 0);
 	/* np_ demon: */
 	trans[_NP_] = (Trans **) emalloc(3*sizeof(Trans *));
 	T = trans[_NP_][0] = settr(9997,0,1,_T5,0,"(np_)", 1,2,0);
