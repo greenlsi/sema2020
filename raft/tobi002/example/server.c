@@ -21,7 +21,7 @@
  * Sample application FSM that just increases a counter.
  *
  ********************************************************************/
-#define LEN_DATA 10
+#define LEN_DATA 5
 static struct pollfd mypoll = { STDIN_FILENO, POLLIN | POLLPRI};
 
 struct pair_t
