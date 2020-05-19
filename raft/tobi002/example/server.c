@@ -351,9 +351,90 @@ static void serverTimerCb(uv_timer_t *timer)
     struct fsm_data f = {0};
     //f.entries[0].key = "h212";
     memcpy(&f, database, sizeof(struct fsm_data));
+    
+    switch (cnt)
+    {
+    case 0:
+        strcpy(f.entries[0].key, "Isma");
+        strcpy(f.entries[0].value, "UP");
+        strcpy(f.entries[1].key, "Nacho");
+        strcpy(f.entries[1].value, "DOWN");
+        strcpy(f.entries[2].key, "Sergio");
+        strcpy(f.entries[2].value, "DOWN");
+        strcpy(f.entries[3].key, "Adri");
+        strcpy(f.entries[3].value, "DOWN");
+        strcpy(f.entries[4].key, "Stefano");
+        strcpy(f.entries[4].value, "DOWN");
 
-    strcpy(f.entries[0].key, "h1212");
-    strcpy(f.entries[0].value, "45637");
+        cnt++;
+
+        break;
+    case 8:
+        strcpy(f.entries[0].key, "Isma");
+        strcpy(f.entries[0].value, "DOWN");
+        strcpy(f.entries[1].key, "Nacho");
+        strcpy(f.entries[1].value, "UP");
+        strcpy(f.entries[2].key, "Sergio");
+        strcpy(f.entries[2].value, "DOWN");
+        strcpy(f.entries[3].key, "Adri");
+        strcpy(f.entries[3].value, "DOWN");
+        strcpy(f.entries[4].key, "Stefano");
+        strcpy(f.entries[4].value, "DOWN");
+
+        cnt++;
+
+        break;
+    case 16:
+        strcpy(f.entries[0].key, "Isma");
+        strcpy(f.entries[0].value, "DOWN");
+        strcpy(f.entries[1].key, "Nacho");
+        strcpy(f.entries[1].value, "DOWN");
+        strcpy(f.entries[2].key, "Sergio");
+        strcpy(f.entries[2].value, "UP");
+        strcpy(f.entries[3].key, "Adri");
+        strcpy(f.entries[3].value, "DOWN");
+        strcpy(f.entries[4].key, "Stefano");
+        strcpy(f.entries[4].value, "DOWN");
+
+        cnt++;
+
+        break;
+    case 24:
+        strcpy(f.entries[0].key, "Isma");
+        strcpy(f.entries[0].value, "DOWN");
+        strcpy(f.entries[1].key, "Nacho");
+        strcpy(f.entries[1].value, "DOWN");
+        strcpy(f.entries[2].key, "Sergio");
+        strcpy(f.entries[2].value, "DOWN");
+        strcpy(f.entries[3].key, "Adri");
+        strcpy(f.entries[3].value, "UP");
+        strcpy(f.entries[4].key, "Stefano");
+        strcpy(f.entries[4].value, "DOWN");
+
+        cnt++;
+
+        break;
+    case 32:
+        strcpy(f.entries[0].key, "Isma");
+        strcpy(f.entries[0].value, "DOWN");
+        strcpy(f.entries[1].key, "Nacho");
+        strcpy(f.entries[1].value, "DOWN");
+        strcpy(f.entries[2].key, "Sergio");
+        strcpy(f.entries[2].value, "DOWN");
+        strcpy(f.entries[3].key, "Adri");
+        strcpy(f.entries[3].value, "DOWN");
+        strcpy(f.entries[4].key, "Stefano");
+        strcpy(f.entries[4].value, "UP");
+
+        cnt=0;
+
+        break;
+    default:
+        cnt++;
+        break;
+    }
+
+    
     
 
     memcpy(buf.base, &f, sizeof(struct fsm_data));
