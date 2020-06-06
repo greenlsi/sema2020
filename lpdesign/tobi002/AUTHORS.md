@@ -1,11 +1,11 @@
 # Miembros del grupo
 
-Ismael Tobar Segura
+Ismael Tobar Segura <i.tobar@alumnos.upm.es>
 
-Ignacio López de Rego Benedi
+Ignacio López de Rego Benedi <i.lopezderego@alumnos.upm.es>
 
-Stefano Zuin Castillo
+Stefano Zuin Castillo <s.zuin@alumnos.upm.es>
 
-Sergio Ávalos Legaz
+Sergio Ávalos Legaz <sergio.alegaz@alumnos.upm.es>
 
-Adrián Ramírez Mengana
+Adrián Ramírez Mengana <a.ramirezm@alumnos.upm.es>
