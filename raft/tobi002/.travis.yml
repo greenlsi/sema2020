@@ -1,0 +1,48 @@
+language: c
+addons:
+  apt:
+    packages:
+    - lcov
+    - linux-libc-dev
+    - libuv1-dev
+    - btrfs-progs
+    - xfsprogs
+    - zfsutils-linux
+jobs:
+  include:
+  - compiler: gcc
+    dist: bionic
+    arch: amd64
+  - compiler: gcc
+    dist: xenial
+    arch: amd64
+  - if: type != pull_request
+    compiler: clang
+    dist: bionic
+    arch: amd64
+  - if: type != pull_request
+    compiler: gcc
+    dist: bionic
+    arch: s390x
+  - if: type != pull_request
+    compiler: gcc
+    dist: bionic
+    arch: arm64
+  - if: type != pull_request
+    compiler: clang
+    dist: bionic
+    arch: ppc64le
+before_script:
+  - git clone --depth 1 https://github.com/edlund/amalgamate.git
+  - export PATH=$PATH:$PWD/amalgamate
+script:
+  - autoreconf -i
+  - ./configure --enable-example --enable-debug --enable-code-coverage --enable-sanitize
+  - amalgamate.py --config=amalgamation.json --source=$(pwd)
+  - $CC raft.c -c -D_GNU_SOURCE -DHAVE_LINUX_AIO_ABI_H -Wall -Wextra -Wpedantic -fpic
+  - ./test/lib/fs.sh setup
+  - make check CFLAGS=-O0 $(./test/lib/fs.sh detect) || (cat ./test-suite.log && false)
+  - if [ $TRAVIS_COMPILER = gcc ]; then make code-coverage-capture; fi
+  - ./test/lib/fs.sh teardown
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -G "./src*"
